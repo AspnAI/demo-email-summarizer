@@ -1,0 +1,8 @@
+streamlit
+streamlit-modal
+transformers
+torch
+openai
+langchain
+requests
+matplotlib
