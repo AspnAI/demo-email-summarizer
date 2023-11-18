@@ -15,5 +15,5 @@ pip install -r requirements.txt
 
 ## Running in Development ##
 ```
-streamlit run app.py
+streamlit run Home.py
 ```
