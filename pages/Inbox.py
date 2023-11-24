@@ -3,7 +3,7 @@ import pandas as pd
 import random
 from streamlit_modal import Modal
 import streamlit.components.v1 as components
-
+from tools import openai 
 
 # Function to generate a random sentiment
 def generate_sentiment():
@@ -16,8 +16,18 @@ def generate_priority():
 
 # Function to simulate generating a response with LangChain
 def generate_response(email_body):
-    # This is where you'd integrate with a language model or an API
-    return "This is a simulated response. Replace this function with your LangChain call."
+    key = st.session_state['current_key']
+    summary = st.session_state[f'{key}_summary']
+    res = openai.getAIResponse("Generate a response to the following email thread for my company keeping in mind the information provided to you. Dont use placeholders, and assume stuff where necessary.",
+                         f"Email Thread: {email_body}\n\nSummary: {summary}\
+                           My Comapny Information: {st.session_state['company_info']},\
+                            Sentiment: {st.session_state[f'{key}_sentiment']},\
+                            Priority: {st.session_state[f'{key}_priority']}\
+                            Category: {st.session_state[f'{key}_category']}\
+                           ")
+    return res
+    #return st.session_state['company_info']
+    #return "This is a simulated response. Replace this function with your LangChain call."
 
 # Load the CSV file
 @st.cache_data
@@ -65,10 +75,13 @@ def display_inbox(df):
             st.write(f"From: {row['From']}")
             st.write(f"Subject: {row['Subject']}")
         with col2:
+            st.session_state[f'{index}_category'] = 'Support'
             st.markdown(f"**Category:** Support")
         with col3:
-            st.markdown(f"**Sentiment:** {generate_sentiment()}")
-            st.markdown(f"**Priority:** {generate_priority()}")
+            st.session_state[f'{index}_sentiment'] = generate_sentiment()
+            st.session_state[f'{index}_priority'] = generate_priority()
+            st.markdown(f"**Sentiment:** {st.session_state[f'{index}_sentiment']}")
+            st.markdown(f"**Priority:** {st.session_state[f'{index}_priority']}")
 
         
         # Now the expander just for the email body
@@ -80,7 +93,7 @@ def display_inbox(df):
             # Thread summarizer
             # Initialize a unique key for the thread summary state
             thread_summary_key = f"show_summary_{index}"
-
+            
             # Initialize the session state for this thread summary if not already done
             if thread_summary_key not in st.session_state:
                 st.session_state[thread_summary_key] = False
@@ -93,7 +106,7 @@ def display_inbox(df):
             # Show or hide the thread summary based on the state
             if st.session_state[thread_summary_key]:
                 with st.spinner('Generating thread summary...'):
-                    summary = generate_thread_summary(row['Inbound_Body'], row['Reply_Body'])
+                    summary = generate_thread_summary(row['Inbound_Body'], row['Reply_Body'],index)
                     st.write(summary)
 
             #####################################################################
@@ -101,17 +114,22 @@ def display_inbox(df):
             
             if st.button("Generate Reply", key=f"btn_reply_{index}"):
                 # Go to a new page with the inbound email and a form field with a suggested response
+                st.session_state['current_key'] = index
                 st.session_state['current_email'] = row['Inbound_Body']
                 st.session_state['show_inbox'] = False
                 st.rerun()
 
 
 # Simulated function to generate a thread summary that takes some time
-def generate_thread_summary(inbound_body, reply_body):
+def generate_thread_summary(inbound_body, reply_body,key):
     # Simulate a time-consuming process
-    import time
-    time.sleep(2)  # replace this with the actual logic
-    return f"Inbound: {inbound_body}\n\nResponse: {reply_body}"
+    #import time
+    #time.sleep(2)  # replace this with the actual logic
+    
+    summary = openai.summarizeEmailThread(f"Inbound: {inbound_body}\n\nResponse: {reply_body}")
+    st.session_state[f'{key}_summary'] = summary
+    return summary
+    #return f"Inbound: {inbound_body}\n\nResponse: {reply_body}"
 
 # Display the email reply page
 def display_reply_page():

@@ -1,11 +1,16 @@
 streamlit
 streamlit-modal
+streamlit-scrollable-textbox
 transformers
 torch
 openai
 langchain
 matplotlib
 
+langchain
+
+python-dotenv
+watchdog
 # For Scraping
 requests
 selenium
