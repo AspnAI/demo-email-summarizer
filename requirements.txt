@@ -4,5 +4,10 @@ transformers
 torch
 openai
 langchain
-requests
 matplotlib
+
+# For Scraping
+requests
+selenium
+beautifulsoup4
+
