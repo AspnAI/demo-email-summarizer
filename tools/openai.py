@@ -14,7 +14,7 @@ from langchain.prompts import PromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.schema.document import Document
 
-
+os.environ["OPENAI_API_KEY"] = "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"
 openAIModel='gpt-4-1106-preview'
 
 chat = ChatOpenAI(model=openAIModel)

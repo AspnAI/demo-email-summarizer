@@ -16,3 +16,6 @@ requests
 selenium
 beautifulsoup4
 
+# For Summarizer related
+pandas
+
