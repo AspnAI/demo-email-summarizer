@@ -8,7 +8,7 @@ You need to add your OpenAI API key to as your ENV variable.
 ``` OPENAI_API_KEY=YOUR_API_KEY```
 
 ## To change Model Parameters, Pie Chart settings, Email Count and Response Schema ##
-Go to `tools/variables.py` and adjust the following:
+Go to `tools/variables.py` and adjust the parameters according to your needs.
 
 ## To Change Prompts
 Go to `tools/prompts/templates.py` and adjust the prompts according to your needs.
