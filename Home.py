@@ -63,7 +63,8 @@ def generateSupportEmailForCompany(company_info):
     return support_email
 
 
-image = Image.open('assets/aspn-white.png')
+# image = Image.open('assets/aspn-white.png')
+image = Image.open('assets/applies_logo_transparent.png')
 
 def main():
     st.set_page_config(
@@ -71,8 +72,8 @@ def main():
         page_icon=image, 
         initial_sidebar_state="auto"
     )
-    st.image(image, width=200)
-    st.title("Email Summarizer")
+    st.image(image, width=400)
+    st.title("Récapitulateur d'e-mails")
     # st.markdown("**SUMMARIZE YOUR EMAILS WITH EASE**")
 
     st.divider()

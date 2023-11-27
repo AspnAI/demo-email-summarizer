@@ -68,6 +68,9 @@ def display_inbox(df):
             st.write(f"**Sentiment:** {row['Sentiment']}")
         with col4:
             priority = row['Priority']
+            if row['Category'] == 'Spam' or row['Category'] == 'Notification':
+                priority = 'Low'
+
             if not priority:
                 priority = random.choice(['High', 'Medium', 'Low'])
             if priority == 'High':

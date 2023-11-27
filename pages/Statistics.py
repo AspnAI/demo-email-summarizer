@@ -42,33 +42,33 @@ def create_pie_chart(data, title):
 
 
 def showStats(load_data, calculate_distribution, create_pie_chart):
-    st.title("Email Analysis Dashboard")
+    st.title("Tableau de bord d'analyse des e-mails")
     csv_file_path = 'emails_data.csv'  # Replace with the path to your CSV file
     if os.path.exists(csv_file_path) == False:
         st.warning("Please set the CSV file path in the code.")
     else:
         df = load_data(csv_file_path)
-        tab1, tab2, tab3, tab4 = st.tabs(["Category", "Sentiment", "Priority", "Company"])
-        # Category Pie Chart in the first tab
+        tab1, tab2, tab3, tab4 = st.tabs(["Catégorie", "Sentiments", "Priorité", "Information d'entreprise"])
+        # Catégorie Pie Chart in the first tab
         with tab1:
-            st.subheader("Email Category Distribution")
+            st.subheader("Distribution des catégories d'e-mails")
             category_distribution = calculate_distribution(df, 'Category')
-            st.pyplot(create_pie_chart(category_distribution, "Category"))
+            st.pyplot(create_pie_chart(category_distribution, "Catégorie"))
 
-        # Sentiment Pie Chart in the second tab
+        # Sentiments Pie Chart in the second tab
         with tab2:
-            st.subheader("Email Sentiment Distribution")
+            st.subheader("Distribution des sentiments par e-mail")
             sentiment_distribution = calculate_distribution(df, 'Sentiment')
-            st.pyplot(create_pie_chart(sentiment_distribution, "Sentiment"))
+            st.pyplot(create_pie_chart(sentiment_distribution, "Sentiments"))
 
-        # Priority Pie Chart in the third tab
+        # Priorité Pie Chart in the third tab
         with tab3:
-            st.subheader("Email Priority Distribution")
+            st.subheader("Distribution prioritaire des e-mails")
             priority_distribution = calculate_distribution(df, 'Priority')
-            st.pyplot(create_pie_chart(priority_distribution, "Priority"))
+            st.pyplot(create_pie_chart(priority_distribution, "Priorité"))
 
         with tab4:
-            st.subheader("Company Information")
+            st.subheader("Information d'entreprise")
             if 'company_info' not in st.session_state:
                 with open("company_info.txt", "r") as f:
                     company_info = f.read()
