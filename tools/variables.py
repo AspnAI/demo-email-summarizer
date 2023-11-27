@@ -2,7 +2,7 @@ from langchain.output_parsers import ResponseSchema
 
 # these are the parameters for the LLM Chain
 class GptParameters:
-    MODEL_NAME: str = "gpt-4"
+    MODEL_NAME: str = "gpt-4-1106-preview"
     TEMPERATURE: float = 0
 
 

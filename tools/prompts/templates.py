@@ -1,10 +1,10 @@
 class TemplatesOfPrompts:
     PROMPT_TEMPLATE_FOR_COMPANY_DESCRIPTION: str = """
-    As an expert in generating detailed and accurate technical descriptions, provide a brief but specific and technically-oriented description of a company's contributions and activities based on the provided summaries extracted from their company website in English.
+    As an expert in generating detailed and accurate technical descriptions, provide a brief but specific and technically-oriented description of a company's contributions and activities based on the provided summaries extracted from their company website in French.
 
     ### INSTRUCTIONS ###
 
-    Read the set of summaries extracted from the company website {doc_summaries}, and using your technical expertise, provide a comprehensive description of the company's specific contributions and activities in English. Focus on the following aspects:
+    Read the set of summaries extracted from the company website {doc_summaries}, and using your technical expertise, provide a comprehensive description of the company's specific contributions and activities in French. Focus on the following aspects:
 
     1. Specialization: Describe the company's area of expertise within the industry, highlighting any unique technologies, products, or services they offer.
 
@@ -13,7 +13,7 @@ class TemplatesOfPrompts:
     3. Industry Impact: Discuss the company's overall contributions and impact within the space industry. Highlight significant projects, collaborations, or advancements that have propelled their reputation.
 
     Your description should aim to be both detailed and accurate, ensuring a comprehensive understanding of the company.
-    Keep your description within 100-125 words.
+    Keep your description in French and within 100-125 words.
     Return only summary, not anything else.
     Helpful Answer:
     """
@@ -32,6 +32,7 @@ class TemplatesOfPrompts:
         2- Keep sentiment same as email.
         3- Keep user email same and keep your email same. Here is the email you have to use for company: {company_email}
         4- Add Re: in the subject.
+        5- Make the reply in the French.
 
         Follow this format for the output: {format_instructions}
         Helpful Answer:
@@ -52,6 +53,7 @@ class TemplatesOfPrompts:
         6- Also pick fake priorities from this list ["High", "Medium", "Low"]
         8- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
         7- Category: Notification
+        8- Make this email in French
 
         Follow this format for the output: {format_instructions}
         Helpful Answer:
@@ -70,8 +72,9 @@ class TemplatesOfPrompts:
         4- Generate fake subject like "Need help with your product", "Need help with your service", "Need help with your software", etc.
         5- USe fake names like John Doe, Jane Doe, etc.
         6- Also pick fake priorities from this list ["High", "Medium", "Low"]
-        8- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
-        7- Category: Spam
+        7- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
+        8- Category: Spam
+        9- Make this email in French
 
         Follow this format for the output: {format_instructions}
         Helpful Answer:
@@ -90,8 +93,10 @@ class TemplatesOfPrompts:
         4- Generate fake subject like "Need help with your product", "Need help with your service", "Need help with your software", etc.
         5- Use fake names like John Doe, Jane Doe, etc.
         6- Also pick fake priorities from this list ["High", "Medium", "Low"]
-        8- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
-        7- Category: Sales
+        7- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
+        8- Category: Sales
+        9- Make this email in French
+
         Follow this format for the output: {format_instructions}
         Helpful Answer:
         """
@@ -112,6 +117,7 @@ class TemplatesOfPrompts:
         6- Also pick fake priorities from this list ["High", "Medium", "Low"]
         7- Category: Support
         8- Also pick Sentiment from this list ["Positive", "Negative", "Neutral"]
+        9- Make this email in French
 
         Follow this format for the output: {format_instructions}
         Helpful Answer:

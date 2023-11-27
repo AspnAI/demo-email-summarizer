@@ -29,21 +29,33 @@ def generateSummaryOfCompany(company_info):
     prompt = PromptTemplate.from_template(prompt_template)
 
     # Define LLM chain
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE, model_name=variables.GptParameters.MODEL_NAME)
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE, 
+        model_name=variables.GptParameters.MODEL_NAME
+    )
     llm_chain = LLMChain(llm=llm, prompt=prompt)
 
     # Define StuffDocumentsChain
-    stuff_chain = StuffDocumentsChain(llm_chain=llm_chain, document_variable_name="doc_summaries")
+    stuff_chain = StuffDocumentsChain(
+        llm_chain=llm_chain, 
+        document_variable_name="doc_summaries"
+    )
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-    docs = [Document(page_content=x) for x in text_splitter.split_text(company_info)]
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500, 
+        chunk_overlap=100
+    )
+    docs = [
+        Document(page_content=x) for x in text_splitter.split_text(company_info)
+    ]
 
     return(stuff_chain.run(docs))
 
 def generateSupportEmailForCompany(company_info):
     print("Generating Support Email")
-    support_email = openai.getAIResponse("Generate a fake support email address for the company keeping in mind the information provided to you. For example like support@abc.com etc. Return only email address, not anything else. Example: support@abc.com",
-    f"Company Information: {company_info}\
+    support_email = openai.getAIResponse(
+        "Generate a fake support email address for the company keeping in mind the information provided to you. For example like support@abc.com etc. Return only email address, not anything else. Example: support@abc.com",
+        f"Company Information: {company_info}\
     ")
     # save email in support.txt
     with open("support.txt", "w") as f:
@@ -54,47 +66,59 @@ def generateSupportEmailForCompany(company_info):
 image = Image.open('assets/aspn-white.png')
 
 def main():
-    st.set_page_config(page_title="Email Summarizer", page_icon=image, initial_sidebar_state="auto")
+    st.set_page_config(
+        page_title="Récapitulateur d'e-mails", 
+        page_icon=image, 
+        initial_sidebar_state="auto"
+    )
     st.image(image, width=200)
     st.title("Email Summarizer")
-    st.markdown("**SUMMARIZE YOUR EMAILS WITH EASE**")
+    # st.markdown("**SUMMARIZE YOUR EMAILS WITH EASE**")
 
     st.divider()
 
-    st.subheader("Please Enter your Company Website URL")
-    website_url = st.text_input("Enter website:", value="", max_chars=None, key=None, type="default",
-                                help=None, autocomplete=None, on_change=None, args=None, kwargs=None,
-                                placeholder="https://www.example.com", disabled=False, label_visibility="visible")
+    st.subheader("Veuillez saisir l'URL du site Web de votre entreprise")
+    
+    website_url = st.text_input(
+        "Entrez l'URL du site:", value="", max_chars=None, key=None, type="default",
+        help=None, autocomplete=None, on_change=None, args=None, kwargs=None,
+        placeholder="https://www.example.com", disabled=False, label_visibility="visible"
+    )
 
-    scrape_button = st.button("Gather Information", key=None, help=None, on_click=None,
-                            args=website_url, kwargs=None, type="primary", disabled=False, use_container_width=False)
+    scrape_button = st.button(
+        "Collecter des informations", key=None, help=None, on_click=None,
+        args=website_url, kwargs=None, type="primary", disabled=False, 
+        use_container_width=False
+    )
 
     if scrape_button:
         try:
-            with st.spinner("Gathering information..."):
+            with st.spinner("Le système collecte des informations..."):
                 website_text = scraper.getWebsiteText(website_url)
                 st.session_state['website_text'] = website_text
         except:
-            st.write("Please enter a valid URL (that is scrapeable with requests)")
-        st.subheader("Operation")
-        with st.spinner("Analyzing Information..."):
+            st.write("Veuillez saisir une URL valide")
+        st.subheader("Opération")
+        with st.spinner("Le système analyse les informations..."):
             company_info = generateSummaryOfCompany(website_text)
             # save company info in company_info.txt
             with open("company_info.txt", "w") as f:
                 f.write(company_info)
             st.session_state['company_info'] = company_info
-            support_email = generateSupportEmailForCompany(st.session_state['company_info'])
+            support_email = generateSupportEmailForCompany(
+                st.session_state['company_info']
+            )
             st.session_state['support_email'] = support_email
-        st.markdown(":white_check_mark: We've built your profile.")
+        st.markdown(":white_check_mark: Votre profil est complet.")
 
         # now we will generate 10 fake emails for the company
-        st.subheader("Generating Emails")
-        with st.spinner("Generating Emails..."):
+        st.subheader("Générer des exemples d'e-mails")
+        with st.spinner("Générer des exemples d'e-mails..."):
             generateEmails.generateFakeEmails(company_info, support_email)
-        st.markdown(":white_check_mark: We've generated your emails.")
+        st.markdown(":white_check_mark: Exemples d'e-mails générés")
         st.divider()   
 
-        st.write("**Now you can use the sidebar to navigate to the inbox and statistics pages.**")
+        st.write("**Vous pouvez désormais utiliser la barre latérale pour accéder aux pages de la boîte de réception et des statistiques.**")
 
         # goToInbox = st.button("Go to Inbox", key=None, help=None, on_click=None,
         #                     args=None, kwargs=None, type="primary", disabled=False, use_container_width=False)

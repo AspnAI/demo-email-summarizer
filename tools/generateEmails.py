@@ -20,36 +20,56 @@ data = []
 
 def generateSupportEmails(format_instructions):
     prompt_template = TemplatesOfPrompts.PROMPT_TEMPLATE_FOR_SUPPORT_EMAIL
-    prompt = PromptTemplate.from_template(template=prompt_template, partial_variables={
-        "format_instructions": format_instructions})
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE, model=variables.GptParameters.MODEL_NAME)
+    prompt = PromptTemplate.from_template(
+        template=prompt_template, 
+        partial_variables={"format_instructions": format_instructions}
+    )
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE, 
+        model=variables.GptParameters.MODEL_NAME
+    )
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain
 
 
 def generateSalesEmails(format_instructions):
     prompt_template = TemplatesOfPrompts.PROMPT_TEMPLATE_FOR_SALES_EMAIL
-    prompt = PromptTemplate.from_template(template=prompt_template, partial_variables={
-        "format_instructions": format_instructions})
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE, model=variables.GptParameters.MODEL_NAME)
+    prompt = PromptTemplate.from_template(
+        template=prompt_template, 
+        partial_variables={ "format_instructions": format_instructions}
+    )
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE, 
+        model=variables.GptParameters.MODEL_NAME
+    )
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain
 
 
 def generateSpamEmails(format_instructions):
     prompt_template = TemplatesOfPrompts.PROMPT_TEMPLATE_FOR_SPAM_EMAIL
-    prompt = PromptTemplate.from_template(template=prompt_template, partial_variables={
-        "format_instructions": format_instructions})
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE, model=variables.GptParameters.MODEL_NAME)
+    prompt = PromptTemplate.from_template(
+        template=prompt_template, 
+        partial_variables={"format_instructions": format_instructions}
+    )
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE, 
+        model=variables.GptParameters.MODEL_NAME
+    )
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain
 
 
 def generateNotificationEmails(format_instructions):
     prompt_template = TemplatesOfPrompts.PROMPT_TEMPLATE_FOR_NOTIFICATION_EMAIL
-    prompt = PromptTemplate.from_template(template=prompt_template, partial_variables={
-        "format_instructions": format_instructions})
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE, model=variables.GptParameters.MODEL_NAME)
+    prompt = PromptTemplate.from_template(
+        template=prompt_template, 
+        partial_variables={"format_instructions": format_instructions}
+    )
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE, 
+        model=variables.GptParameters.MODEL_NAME
+    )
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain
 
@@ -68,7 +88,10 @@ def generate_and_parse_email(email_generator, count, company_info, support_email
     emails = []
     for i in range(count):
         email = email_generator(format_instructions=format_instructions).run(
-            company_info=company_info, email_list=email_list, company_email=support_email)
+            company_info=company_info, 
+            email_list=email_list, 
+            company_email=support_email
+        )
         parsedEmail = outputParser.parse(email)
         emails.append(parsedEmail)
     return emails
@@ -76,10 +99,14 @@ def generate_and_parse_email(email_generator, count, company_info, support_email
 
 def generateFakeReply(format_instructions):
     prompt_template = TemplatesOfPrompts.PROMPT_TEMPLATE_FOR_REPLY
-    prompt = PromptTemplate.from_template(template=prompt_template, partial_variables={
-        "format_instructions": format_instructions})
-    llm = ChatOpenAI(temperature=variables.GptParameters.TEMPERATURE,
-                    model=variables.GptParameters.MODEL_NAME)
+    prompt = PromptTemplate.from_template(
+        template=prompt_template, 
+        partial_variables={"format_instructions": format_instructions}
+    )
+    llm = ChatOpenAI(
+        temperature=variables.GptParameters.TEMPERATURE,
+        model=variables.GptParameters.MODEL_NAME
+    )
     chain = LLMChain(llm=llm, prompt=prompt)
     return chain
 
