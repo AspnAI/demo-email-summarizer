@@ -64,7 +64,7 @@ def generateSupportEmailForCompany(company_info):
 
 
 # image = Image.open('assets/aspn-white.png')
-image = Image.open('assets/applies_logo_transparent.png')
+image = Image.open('assets/zenkoai-logo.png')
 
 def main():
     st.set_page_config(
